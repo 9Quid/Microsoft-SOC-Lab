@@ -43,10 +43,8 @@ This behavior is characteristic of password spraying and differs from traditiona
 
 ### Platform Evidence
 
-- Screenshots/detection-rule.png
-- `Screenshots/02-xdr-incident-overview.png`
-- `Screenshots/03-incident-entities.png`
-
+- ![alt text](Screenshots/detection-rule.png)
+- ![alt text](Screenshots/xdr-incident-overview.png)
 ---
 
 # Investigation
@@ -195,11 +193,9 @@ No account compromise was established.
 
  
 ---
- 
+
 ## Assessment
- 
 ### Confirmed
- 
 - Four Finance department accounts were targeted.
 - All observed attempts originated from `192.168.1.50`.
 - NTLM authentication was used.
