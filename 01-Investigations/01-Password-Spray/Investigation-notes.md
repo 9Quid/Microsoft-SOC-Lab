@@ -62,9 +62,11 @@ The underlying authentication telemetry was reviewed directly rather than relyin
 | 2026-09-23 17:24:46 | `lydia.morgan@9quidsecurity.com` | `192.168.1.50` | `LogonFailed` | NTLM | `WrongPassword` |
 | 2026-09-23 17:24:46 | `martin.cooper@9quidsecurity.com` | `192.168.1.50` | `LogonFailed` | NTLM | `WrongPassword` |
 | 2026-09-23 17:24:46 | `ava.bennett@9quidsecurity.com` | `192.168.1.50` | `LogonFailed` | NTLM | `WrongPassword` |
+
  
 **Query:** `queries/01-raw-event-validation.kql`
- 
+
+ 
 ---
  
 ## Password Spray Pattern
@@ -74,11 +76,14 @@ The authentication events were grouped by source IP to measure the number of fai
 | Source IP | Targeted Accounts | Failed Attempts | Protocol | Destination |
 |---|---:|---:|---|---|
 | `192.168.1.50` | 4 | 4 | NTLM | `9quid-server.9quid.local` |
+
  
 The activity met the configured detection threshold of four distinct accounts from a common source.
+
  
 **Query:** `queries/02-pattern-validation.kql`
- 
+
+ 
 ---
  
 ## Targeted Accounts
@@ -89,9 +94,11 @@ The activity met the configured detection threshold of four distinct accounts fr
 | `lydia.morgan@9quidsecurity.com` | Finance | Failed |
 | `martin.cooper@9quidsecurity.com` | Finance | Failed |
 | `ava.bennett@9quidsecurity.com` | Finance | Failed |
+
  
 All four accounts were targeted during the same execution window.
- 
+
+ 
 ---
  
 ## Scope
@@ -108,9 +115,11 @@ All four accounts were targeted during the same execution window.
 | Failure reason | `WrongPassword` |
 | Successful compromise | No |
 | Defender XDR alerts generated | 4 |
- 
+
+ 
 **Query:** `queries/03-scope.kql`
- 
+
+ 
 ---
  
 ## Timeline
@@ -124,9 +133,11 @@ All four accounts were targeted during the same execution window.
 | After rule evaluation | Microsoft Defender XDR custom detection generated four alerts |
 | After alert generation | Alert entities and underlying authentication telemetry were reviewed |
 | After final validation | Case classified as a Benign Positive and closed |
- 
+
+ 
 **Query:** `queries/04-timeline.kql`
- 
+
+ 
 ---
  
 ## Successful Authentication Review
@@ -139,11 +150,14 @@ Authentication activity for all four targeted accounts was reviewed to determine
 | `lydia.morgan@9quidsecurity.com` | Failed | No |
 | `martin.cooper@9quidsecurity.com` | Failed | No |
 | `ava.bennett@9quidsecurity.com` | Failed | No |
- 
+
+ 
 No successful authentication associated with the observed password spray was identified during the investigation window.
- 
+
+ 
 **Query:** `queries/05-success-check.kql`
- 
+
+ 
 ---
  
 ## Findings
@@ -173,11 +187,13 @@ The source attempted authentication against multiple accounts while keeping the 
 This horizontal targeting pattern is consistent with password spraying rather than traditional brute force against one account.
  
 ### Finding 5: The Spray Was Unsuccessful
+
  
 No successful authentication associated with the password spray was identified during the investigation window.
  
 No account compromise was established.
- 
+
+ 
 ---
  
 ## Assessment
