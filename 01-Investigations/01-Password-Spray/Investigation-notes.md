@@ -11,7 +11,7 @@
 | Severity | Medium |
 | Affected Department | Finance |
 | Current Verdict | Benign Positive, Authorized Security Test |
-| Incident ID | `[INCIDENT-ID]` |
+
 
 ---
 
