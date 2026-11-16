@@ -51,7 +51,6 @@ This behavior is characteristic of password spraying and differs from traditiona
 
 # Investigation
 
-# Investigation
  
 ## Raw Authentication Events
  
