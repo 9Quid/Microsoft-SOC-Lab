@@ -52,7 +52,7 @@ Microsoft Defender XDR automatically correlated five related Defender for Identi
 
 ### Platform Evidence
 
-- [alt text](<Screenshots/incident-overview & alerts.png>)
+![alt text](<Screenshots/incident-overview & alerts.png>)
 
 ---
 
@@ -77,6 +77,7 @@ Windows Event ID 4769 confirmed that a service ticket was requested for `svc-sql
 
 ### Evidence 1 — Kerberos Service Ticket Request (4769)
 
+```
 SecurityEvent 
 | where EventID == 4769 
 | extend TicketEncryptionType = extract(@"TicketEncryptionType"">([^<]+)", 1, EventData), 
@@ -86,7 +87,8 @@ SecurityEvent
 | where TicketEncryptionType in ("0x17", "23") // Match RC4 encryption 
 | where ServiceName !endswith "$"              // Exclude machine accounts 
 | project TimeGenerated, TargetAccount, ServiceName, ClientIP, TicketEncryptionType, Computer 
-| order by TimeGenerated desc 
+| order by TimeGenerated desc
+```
 
 - ![alt text](Screenshots/4769-rc4-ticket.png)
 
@@ -123,12 +125,14 @@ The offline recovery and the successful authentication provided two separate for
 
 ### Evidence 4 - Tracking Service Account Logon Activity (Event 4624) in Sentinel
 
+```
 SecurityEvent 
 | where EventID == 4624 
 | where TargetUserName == "svc-sqlservice" or IpAddress == "192.168.1.50" 
 | where TargetUserName !endswith "$" 
 | project TimeGenerated, TargetUserName, LogonType, IpAddress, WorkstationName, Computer 
-| order by TimeGenerated asc 
+| order by TimeGenerated asc
+```
 
 ![alt text](Screenshots/post-exploitation.png)
 
@@ -138,6 +142,7 @@ Looking at the screenshot above, it can be confirmed that there was a successful
 
 Next, I needed to verify if the attacker established persistence or executed a malicious payload by checking for Newly Installed Services (Event 4697)
 
+```
 SecurityEvent 
 | where EventID == 4697 
 | extend ServiceName = extract(@"ServiceName"">([^<]+)", 1, EventData), 
@@ -146,6 +151,7 @@ SecurityEvent
         SubjectUserName = extract(@"SubjectUserName"">([^<]+)", 1, EventData) 
 | project TimeGenerated, Computer, SubjectUserName, ServiceName, ServiceFileName, ServiceAccount 
 | order by TimeGenerated desc
+```
 
 - ![alt text](Screenshots/persistence-check.png)
 
